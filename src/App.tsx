@@ -20,7 +20,9 @@ import {
   Minus,
   Building2,
   Trophy,
-  Rocket
+  Rocket,
+  Info,
+  MessageCircle
 } from 'lucide-react';
 
 import { PulseBeams } from './components/ui/pulse-beams';
@@ -28,7 +30,7 @@ import { CpuArchitecture } from './components/ui/cpu-architecture';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-fist-offwhite text-fist-graphite font-sans">
+    <div className="min-h-screen bg-fist-offwhite text-fist-graphite font-sans pb-24 md:pb-0">
       <Header />
       <main>
         <Hero />
@@ -39,6 +41,13 @@ export default function App() {
         <FAQ />
       </main>
       <Footer />
+      
+      {/* Sticky Mobile CTA */}
+      <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-xl border-t border-gray-100 p-4 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+         <button className="w-full flex items-center justify-center gap-2 bg-fist-red text-white py-3.5 rounded-full font-extrabold text-lg shadow-lg shadow-fist-red/20 active:scale-95 transition-transform">
+            Invista Agora <ChevronRight className="w-5 h-5" />
+         </button>
+      </div>
     </div>
   );
 }
@@ -65,7 +74,7 @@ function Header() {
         <nav className="hidden md:flex items-center gap-8 font-medium text-sm text-gray-300">
           <a href="#sobre" className="hover:text-fist-red transition-colors">Sobre</a>
           <a href="#tese" className="hover:text-fist-red transition-colors">Tese de Energia</a>
-          <a href="#como-funciona" className="hover:text-fist-red transition-colors">Como Funciona</a>
+          <a href="#ecossistema" className="hover:text-fist-red transition-colors">Nosso Ecossistema</a>
           <a href="#faq" className="hover:text-fist-red transition-colors">FAQ</a>
         </nav>
 
@@ -85,18 +94,35 @@ function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -10 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 w-full bg-fist-dark border-t border-white/10 shadow-lg py-4 px-6 flex flex-col gap-4 md:hidden"
+            initial={{ opacity: 0, x: '100%' }} 
+            animate={{ opacity: 1, x: 0 }} 
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-40 bg-fist-dark md:hidden flex flex-col pt-24 px-8 pb-32 overflow-y-auto"
           >
-            <a href="#sobre" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 font-medium">Sobre</a>
-            <a href="#tese" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 font-medium">Tese de Energia</a>
-            <a href="#como-funciona" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 font-medium">Como Funciona</a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-gray-300 font-medium">FAQ</a>
-            <button className="w-full mt-2 flex justify-center items-center gap-2 bg-fist-red text-white px-5 py-3 rounded-full font-semibold hover:bg-fist-red-hover">
-              Invista Agora <ChevronRight className="w-4 h-4" />
-            </button>
+            <div className="flex flex-col gap-6 flex-1 mt-4">
+              {[ 
+                {href: '#sobre', label: 'Sobre a FIST', icon: Info}, 
+                {href: '#tese', label: 'Tese de Energia', icon: Zap}, 
+                {href: '#ecossistema', label: 'Nosso Ecossistema', icon: Activity}, 
+                {href: '#faq', label: 'Perguntas Frequentes', icon: MessageCircle} 
+              ].map((link, idx) => (
+                <motion.a 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 * idx }}
+                  key={link.href} 
+                  href={link.href} 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="group flex items-center gap-5 text-2xl font-extrabold text-white hover:text-fist-red transition-colors"
+                >
+                  <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-fist-red/10 group-hover:rotate-6 transition-all">
+                     <link.icon className="w-7 h-7 text-fist-red" />
+                  </div>
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -308,52 +334,77 @@ function MarketData() {
   return (
     <section id="sobre" className="py-24 bg-[#F6F5F3]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="mb-16 max-w-4xl">
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-fist-red font-bold tracking-widest text-sm uppercase mb-4"
-          >
-            Sobre a Fist
-          </motion.p>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-extrabold text-black mb-6 leading-tight"
-          >
-            Infraestrutura de mercado de capitais para o <span className="text-fist-red">futuro da energia</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-3xl"
-          >
-            A FIST atua como uma plataforma de Capital Markets as a Service, oferecendo funcionalidades para ofertas públicas e privadas, fundos de investimento e gestão completa do ciclo de vida de debêntures e notas comerciais utilizando tecnologia blockchain.
-          </motion.p>
-        </div>
+        <div className="flex flex-col lg:flex-row gap-16 items-center">
+          <div className="flex-1 w-full">
+            <div className="mb-12">
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-fist-red font-bold tracking-widest text-sm uppercase mb-4"
+              >
+                Sobre a Fist
+              </motion.p>
+              <motion.h2 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+                className="text-4xl md:text-5xl font-extrabold text-black mb-6 leading-tight"
+              >
+                Infraestrutura de mercado de capitais para o <span className="text-fist-red">futuro da energia</span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="text-gray-600 text-lg md:text-xl leading-relaxed"
+              >
+                A FIST atua como uma plataforma de Capital Markets as a Service, oferecendo funcionalidades para ofertas públicas e privadas, fundos de investimento e gestão completa do ciclo de vida de debêntures e notas comerciais utilizando tecnologia blockchain.
+              </motion.p>
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm group hover:border-gray-300 transition-colors"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {stats.map((stat, idx) => (
+                <motion.div 
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm group hover:border-gray-300 transition-colors"
+                >
+                  <h3 className="text-3xl font-extrabold text-black mb-2 group-hover:text-fist-red transition-colors">
+                    <AnimatedCounter prefix={stat.prefix} target={stat.num} suffix={stat.suffix} decimals={stat.decimals} />
+                  </h3>
+                  <p className="text-black font-medium mb-2 text-sm">{stat.label}</p>
+                  <p className="text-[10px] text-gray-500 uppercase tracking-widest">{stat.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="w-full lg:w-5/12"
+          >
+            <motion.div
+              animate={{ y: [0, -20, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full h-[500px] lg:h-[700px] rounded-[2.5rem] overflow-hidden shadow-2xl"
             >
-              <h3 className="text-4xl font-extrabold text-black mb-2 group-hover:text-fist-red transition-colors">
-                <AnimatedCounter prefix={stat.prefix} target={stat.num} suffix={stat.suffix} decimals={stat.decimals} />
-              </h3>
-              <p className="text-black font-medium mb-3">{stat.label}</p>
-              <p className="text-xs text-gray-600 uppercase tracking-widest">{stat.desc}</p>
+              <img 
+                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/hero-energy-fHNnbETNc7zAxRNqcHZgnC.webp" 
+                alt="Sobre a FIST" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-fist-red/10 mix-blend-multiply pointer-events-none"></div>
             </motion.div>
-          ))}
+          </motion.div>
         </div>
       </div>
     </section>
@@ -435,7 +486,43 @@ function InvestmentThesis() {
   return (
     <section id="tese" className="py-24 bg-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+        
+        {/* Mobile Layout: Card Swiper */}
+        <div className="lg:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 -mx-6 px-6 hide-scrollbar">
+          {thesisData.map((data, idx) => {
+            const Icon = data.id === 'energia' ? Zap : data.id === 'real-estate' ? Building2 : data.id === 'esportes' ? Trophy : Rocket;
+            return (
+              <div key={idx} className="snap-center shrink-0 w-[85vw] flex flex-col gap-6">
+                <div className="w-full relative h-[380px] rounded-[2rem] overflow-hidden shadow-xl">
+                  <img src={data.image} alt={data.tabLabel} className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                  
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <p className="text-fist-red font-bold text-xs uppercase tracking-widest mb-2">{data.tabLabel}</p>
+                    <h3 className="text-white text-2xl font-extrabold leading-[1.2]">{data.headline}</h3>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center mb-2 shadow-inner">
+                      <Icon className="w-7 h-7 text-fist-red stroke-[1.5]" />
+                  </div>
+                  <p className="text-gray-600 text-[16px] leading-[1.6]">{data.description}</p>
+                  
+                  <div className="mt-4 bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                      <div className="text-2xl font-extrabold text-fist-red mb-1">
+                        {data.cardPrefix}{data.cardNum}{data.cardSuffix}
+                      </div>
+                      <p className="text-[13px] font-semibold text-fist-graphite leading-snug">{data.cardLabel}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop Layout */}
+        <div className="hidden lg:flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           {/* Lado Esquerdo: Imagem Dinâmica e Card Flutuante */}
           <div className="w-full lg:w-1/2 relative h-[500px] lg:h-[650px] rounded-[2.5rem] overflow-hidden shadow-2xl">
@@ -561,7 +648,7 @@ function InvestmentThesis() {
             </div>
 
             <a 
-              href="#" 
+              href="#marketplace" 
               className="group inline-flex items-center gap-2 font-bold text-fist-red hover:text-fist-red-hover transition-colors relative"
             >
               <span>Ver oportunidades disponíveis</span>
@@ -629,76 +716,52 @@ function Ecosystem() {
           </p>
         </div>
 
-        {/* Mobile Layout (Vertical Flow) */}
-        <div className="flex flex-col lg:hidden gap-8 items-center relative w-full pt-10">
+        {/* Mobile Layout (Vertical Venn Bubble Flow) */}
+        <div className="flex flex-col lg:hidden relative w-full pt-6">
            
-          {/* Central Hub at TOP */}
-          <div className="relative w-full h-[280px] flex items-center justify-center -mb-4 mx-auto z-20">
-            {/* Glassmorphism Circle Center */}
-            <div className="absolute z-50 w-[180px] h-[180px] bg-white/80 backdrop-blur-xl border border-white/80 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center p-6">
-                <img 
-                  src="https://prod-fist.web.app/assets/logoPreta-CoFflQrd.png" 
-                  alt="FIST Logo" 
-                  className="w-full h-auto brightness-0" 
-                />
-            </div>
-          </div>
-
-          <div className="w-full relative flex flex-col gap-6 items-center z-10">
-            {/* SVG Lines for Mobile */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ top: '-40px' }}>
-              <defs>
-                <filter id="neon-glow-mobile" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-              {Object.values(pillars).map((pillar, idx) => {
-                  const y2 = (idx * 200) + 100; // estimated distance between cards
-                  const isActive = hoveredNode === pillar.id;
-                  return (
-                    <g key={`mobile-line-${pillar.id}`}>
-                      {/* Base Line */}
-                      <line x1="50%" y1="0" x2="50%" y2={y2} className={`transition-colors duration-300 ${isActive ? 'stroke-fist-red/20' : 'stroke-gray-200'}`} strokeWidth="2" />
-                      {/* Animated Flow Line */}
-                      <line 
-                        x1="50%" y1="0" x2="50%" y2={y2} 
-                        className={`cpu-flow-line transition-all duration-300 ${isActive ? 'stroke-fist-red' : 'stroke-gray-300'}`} 
-                        strokeWidth={isActive ? "3" : "2"} 
-                        filter={isActive ? "url(#neon-glow-mobile)" : "none"}
-                      />
-                    </g>
-                  );
-              })}
-            </svg>
-
-            {Object.values(pillars).map((pillar) => (
-              <div 
-                key={pillar.id} 
-                className="w-full max-w-[320px] bg-white p-5 rounded-2xl shadow-lg border border-gray-100 flex flex-col relative group cursor-pointer transition-all hover:shadow-xl hover:border-fist-red/30 z-10"
-                onMouseEnter={() => setHoveredNode(pillar.id)}
-                onMouseLeave={() => setHoveredNode(null)}
+           {/* Overlapping Circles on Y-axis */}
+           <div className="relative w-full h-[320px] flex flex-col items-center justify-center pointer-events-none mb-10">
+              {/* FIST CWF Circle */}
+              <motion.div 
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute top-0 z-10 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-fist-red to-fist-red-hover flex items-center justify-center p-6 shadow-2xl"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-300 ${hoveredNode === pillar.id ? 'bg-fist-red text-white shadow-md shadow-fist-red/30' : 'bg-red-50 text-fist-red'}`}>
-                    {pillar.icon}
-                  </div>
-                  <h3 className="text-lg font-bold text-[#1A1A1A]">{pillar.title}</h3>
-                </div>
-                <ul className="space-y-2 text-sm font-medium text-gray-500">
-                  {pillar.items.map((item, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${hoveredNode === pillar.id ? 'bg-fist-red' : 'bg-gray-300'}`}></div>
-                      <span className={hoveredNode === pillar.id ? 'text-fist-graphite' : ''}>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                  <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
+                  <span className="text-white font-extrabold text-xl tracking-widest drop-shadow-md">FIST CWF</span>
+              </motion.div>
+              
+              {/* FIST ASSET Circle */}
+              <motion.div 
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                className="absolute bottom-0 z-20 w-[190px] h-[190px] rounded-full bg-white/20 backdrop-blur-xl border border-white/50 flex items-center justify-center p-6 shadow-xl"
+              >
+                  <span className="text-fist-graphite font-extrabold text-xl tracking-widest drop-shadow-md">FIST ASSET</span>
+              </motion.div>
+
+              {/* Central Connection glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-[100px] h-[100px] bg-white/40 rounded-full blur-xl pointer-events-none"></div>
+           </div>
+
+           {/* Horizontal Snap Carousel */}
+           <div className="w-full">
+              <h3 className="text-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Setores Integrados</h3>
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 hide-scrollbar -mx-6 px-6">
+                 {["Energia", "Real Estate", "Esportes", "Startups"].map((setor, idx) => {
+                    const icons = [Zap, Building2, Trophy, Rocket];
+                    const Icon = icons[idx];
+                    return (
+                      <div key={idx} className="snap-center shrink-0 w-[65vw] bg-white/80 backdrop-blur-md border border-white/60 p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center h-[140px] gap-3">
+                         <div className="bg-red-50 w-12 h-12 rounded-xl flex items-center justify-center text-fist-red shadow-inner">
+                            <Icon className="w-6 h-6 stroke-[1.5]" />
+                         </div>
+                         <span className="text-lg font-extrabold text-fist-graphite">{setor}</span>
+                      </div>
+                    );
+                 })}
               </div>
-            ))}
-          </div>
+           </div>
         </div>
 
         {/* Desktop Layout (Grid Cross Layout) */}
@@ -881,7 +944,7 @@ function Footer() {
             <h4 className="font-bold text-lg mb-6">Plataforma</h4>
             <ul className="space-y-4 text-gray-400 text-sm font-medium">
               <li><a href="#" className="hover:text-white transition-colors">Marketplace</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Como Funciona</a></li>
+              <li><a href="#ecossistema" className="hover:text-white transition-colors">Nosso Ecossistema</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Tese de Investimento</a></li>
               <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
             </ul>
