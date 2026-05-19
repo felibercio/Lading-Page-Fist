@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ChevronRight, 
-  Menu, 
-  X, 
-  ShieldCheck, 
-  Activity, 
-  Zap, 
-  Sun, 
-  Wind, 
-  Battery, 
-  Factory, 
+import {
+  ChevronRight,
+  Menu,
+  X,
+  ShieldCheck,
+  Activity,
+  Zap,
+  Sun,
+  Wind,
+  Battery,
+  Factory,
   TrendingUp,
   UserPlus,
   Search,
@@ -22,7 +22,8 @@ import {
   Trophy,
   Rocket,
   Info,
-  MessageCircle
+  MessageCircle,
+  CheckCircle2
 } from 'lucide-react';
 
 import { PulseBeams } from './components/ui/pulse-beams';
@@ -33,16 +34,19 @@ export default function App() {
   return (
     <div className="w-full bg-fist-offwhite text-fist-graphite font-sans overflow-hidden relative">
       <Header />
-      
+
       <main>
         <div id="hero" className="min-h-screen flex flex-col justify-center relative w-full bg-fist-offwhite">
-          <Hero />
+          <SavingsHero />
           <TrustBar />
         </div>
         <div id="sobre" className="min-h-screen flex flex-col justify-center relative w-full bg-[#F6F5F3]">
           <MarketData />
         </div>
-        <div id="tese" className="min-h-screen flex flex-col justify-center relative w-full bg-fist-offwhite">
+        <div id="investimento" className="min-h-screen flex flex-col justify-center relative w-full bg-fist-offwhite">
+          <InvestmentHero />
+        </div>
+        <div id="tese" className="min-h-screen flex flex-col justify-center relative w-full bg-white">
           <InvestmentThesis />
         </div>
         <div id="ecossistema" className="min-h-screen flex flex-col justify-center relative w-full bg-white">
@@ -58,14 +62,14 @@ export default function App() {
           <Footer />
         </div>
       </main>
-      
+
       <BulletNavigation />
 
       {/* Sticky Mobile CTA */}
       <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-white/90 backdrop-blur-xl border-t border-gray-100 p-4 pb-safe shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
-         <button className="w-full flex items-center justify-center gap-2 bg-fist-green text-white py-3.5 rounded-full font-extrabold text-lg shadow-lg shadow-fist-green/20 active:scale-95 transition-transform">
-            Invista Agora <ChevronRight className="w-5 h-5" />
-         </button>
+        <button className="w-full flex items-center justify-center gap-2 bg-fist-green text-white py-3.5 rounded-full font-extrabold text-lg shadow-lg shadow-fist-green/20 active:scale-95 transition-transform">
+          Invista Agora <ChevronRight className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );
@@ -73,7 +77,7 @@ export default function App() {
 
 function BulletNavigation() {
   const [activeSection, setActiveSection] = useState('hero');
-  const sections = ['hero', 'sobre', 'tese', 'ecossistema', 'gerador', 'faq', 'footer'];
+  const sections = ['hero', 'sobre', 'investimento', 'tese', 'ecossistema', 'gerador', 'faq', 'footer'];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -105,7 +109,7 @@ function BulletNavigation() {
   return (
     <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-3">
       {sections.map(id => (
-        <button 
+        <button
           key={id}
           onClick={() => scrollTo(id)}
           className={`w-3 h-3 rounded-full transition-all duration-300 ${activeSection === id ? 'bg-fist-green scale-125' : 'bg-gray-300 hover:bg-gray-400'}`}
@@ -147,7 +151,7 @@ function Header() {
           <button className="hidden md:flex items-center gap-2 bg-fist-green text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-fist-green-hover transition-colors shadow-lg shadow-fist-green/20">
             Invista Agora <ChevronRight className="w-4 h-4" />
           </button>
-          
+
           <button className="md:hidden text-gray-300" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? <X /> : <Menu />}
           </button>
@@ -157,31 +161,31 @@ function Header() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }} 
-            animate={{ opacity: 1, x: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             className="fixed inset-0 z-40 bg-fist-dark md:hidden flex flex-col pt-24 px-8 pb-32 overflow-y-auto"
           >
             <div className="flex flex-col gap-6 flex-1 mt-4">
-              {[ 
-                {href: '#sobre', label: 'Sobre a FIST', icon: Info}, 
-                {href: '#tese', label: 'Tese de Energia', icon: Zap}, 
-                {href: '#ecossistema', label: 'Nosso Ecossistema', icon: Activity}, 
-                {href: '#faq', label: 'Perguntas Frequentes', icon: MessageCircle} 
+              {[
+                { href: '#sobre', label: 'Quem Somos', icon: Info },
+                { href: '#tese', label: 'Tese de Energia', icon: Zap },
+                { href: '#ecossistema', label: 'Nosso Ecossistema', icon: Activity },
+                { href: '#faq', label: 'Perguntas Frequentes', icon: MessageCircle }
               ].map((link, idx) => (
-                <motion.a 
+                <motion.a
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * idx }}
-                  key={link.href} 
-                  href={link.href} 
-                  onClick={() => setMobileMenuOpen(false)} 
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
                   className="group flex items-center gap-5 text-2xl font-extrabold text-white hover:text-fist-green transition-colors"
                 >
                   <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-fist-green/10 group-hover:rotate-6 transition-all">
-                     <link.icon className="w-7 h-7 text-fist-green" />
+                    <link.icon className="w-7 h-7 text-fist-green" />
                   </div>
                   {link.label}
                 </motion.a>
@@ -194,77 +198,177 @@ function Header() {
   );
 }
 
-function Hero() {
+function SavingsHero() {
+  return (
+    <section className="py-8 lg:py-12 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 w-full mt-16 lg:mt-0">
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex-1 text-center lg:text-left z-10"
+      >
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-semibold text-fist-gray mb-6 shadow-sm">
+          <Sun className="w-4 h-4 text-fist-green" />
+          <span>Energia Limpa e Sustentável</span>
+        </div>
+
+        <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-fist-graphite leading-[1.1] mb-6">
+          Economize até 20% na <br className="hidden lg:block" />
+          sua conta de <span className="text-fist-green">luz.</span>
+        </h1>
+
+        <p className="text-lg text-fist-gray mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+          <strong className="text-fist-graphite font-extrabold text-xl block mb-2">Sem custo. Sem obra. Sem instalação.</strong>
+          Receba créditos de energia solar no seu consumo e pague menos todos os meses.
+        </p>
+
+        <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+          <a href="#gerador" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-fist-graphite text-white px-8 py-4 rounded-full font-bold hover:bg-black transition-all hover:scale-105 active:scale-95 text-lg shadow-xl">
+            Quero ver minha economia <ChevronRight className="w-5 h-5" />
+          </a>
+        </div>
+
+        <div className="mt-12 flex items-center justify-center lg:justify-start gap-8 border-t border-gray-200 pt-8">
+          <div>
+            <p className="font-bold text-fist-graphite text-sm">Sem investimento</p>
+            <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Custo Zero</p>
+          </div>
+          <div>
+            <p className="font-bold text-fist-graphite text-sm">Desconto de até 20%</p>
+            <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Garantido</p>
+          </div>
+          <div>
+            <p className="font-bold text-fist-graphite text-sm">Pessoa física e jurídica</p>
+            <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Para todos</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="flex-1 relative w-full h-[400px] lg:h-[600px]"
+      >
+        <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-green-50/50 rounded-[40px] transform rotate-3 scale-95 opacity-50"></div>
+
+        <motion.div
+          className="relative z-10 w-full h-full cursor-pointer group"
+          animate={{ y: [0, -20, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <img
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/hero-energy-fHNnbETNc7zAxRNqcHZgnC.webp"
+            alt="3D Abstract Energy Savings"
+            className="w-full h-full object-contain p-4 lg:p-8 drop-shadow-2xl mix-blend-multiply group-hover:scale-[1.02] transition-transform duration-700"
+          />
+
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="absolute bottom-8 left-4 lg:bottom-16 lg:left-4 z-20 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 border border-white/50"
+          >
+            <div className="bg-green-50 flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl text-fist-green shadow-inner">
+              <Zap className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-fist-graphite">Conta Menor</p>
+              <p className="text-xs text-gray-500 font-medium mt-0.5">Todos os meses</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="absolute top-8 right-4 lg:top-16 lg:right-4 z-20 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 border border-white/50"
+          >
+            <div className="bg-green-50 flex-shrink-0 w-12 h-12 flex items-center justify-center rounded-xl text-fist-green shadow-inner">
+              <Sun className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-fist-graphite">Energia Solar</p>
+              <p className="text-xs text-gray-500 font-medium mt-0.5">Sustentabilidade</p>
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function InvestmentHero() {
   return (
     <section className="py-8 lg:py-12 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 w-full">
-      <motion.div 
-        initial={{ opacity: 0, x: -30 }} 
-        animate={{ opacity: 1, x: 0 }} 
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className="flex-1 text-center lg:text-left z-10"
       >
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-semibold text-fist-gray mb-6 shadow-sm">
           <ShieldCheck className="w-4 h-4 text-fist-green" />
-          <span>Autorizada pela CVM — Resolução 88</span>
+          <span>Fist Crowdfunding — Autorizada pela CVM (Resolução 88)</span>
         </div>
-        
-        <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-fist-graphite leading-[1.1] mb-6">
-          Investimentos <br className="hidden lg:block"/>
-          Alternativos em <br className="hidden lg:block"/>
-          <span className="text-fist-green">Energia.</span>
+
+        <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight text-fist-graphite leading-[1.1] mb-6">
+          Invista em projetos reais: <br className="hidden lg:block" />
+          <span className="text-fist-green">energia, imóveis, esportes e mais.</span>
         </h1>
-        
+
         <p className="text-lg text-fist-gray mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-          Plataforma de oferta pública de renda fixa digital com foco no setor energético. Invista com segurança, transparência e tecnologia blockchain.
+          Você escolhe onde investir e acompanha retornos previsíveis em operações digitais regulamentadas.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-          <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-fist-graphite text-white px-8 py-3.5 rounded-full font-semibold hover:bg-black transition-all hover:scale-105 active:scale-95 text-base shadow-xl">
+          <a href="#tese" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-fist-graphite text-white px-8 py-3.5 rounded-full font-semibold hover:bg-black transition-all hover:scale-105 active:scale-95 text-base shadow-xl">
             Investir <ChevronRight className="w-4 h-4" />
-          </button>
+          </a>
           <button className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-fist-graphite border border-gray-200 px-8 py-3.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-base">
             Como Funciona
           </button>
         </div>
-        
-        <div className="mt-12 flex items-center justify-center lg:justify-start gap-8 border-t border-gray-200 pt-8">
-           <div>
-              <p className="font-bold text-fist-graphite">CVM 88</p>
-              <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Regulamentação</p>
-           </div>
-           <div>
-              <p className="font-bold text-fist-graphite">Energia</p>
-              <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Tese Principal</p>
-           </div>
-           <div>
-              <p className="font-bold text-fist-graphite">Blockchain</p>
-              <p className="text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Infraestrutura</p>
-           </div>
+
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8 border-t border-gray-200 pt-8 text-center sm:text-left">
+          <div>
+            <p className="font-bold text-fist-graphite">Blockchain</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Infraestrutura</p>
+          </div>
+          <div>
+            <p className="font-bold text-fist-graphite">Energia</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Tese Principal</p>
+          </div>
+          <div>
+            <p className="font-bold text-fist-graphite leading-tight">Renda Fixa Digital</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Retornos previsíveis</p>
+          </div>
+          <div>
+            <p className="font-bold text-fist-graphite">CVM 88</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Regulamentação</p>
+          </div>
         </div>
       </motion.div>
 
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }} 
-        animate={{ opacity: 1, scale: 1 }} 
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
         className="flex-1 relative w-full h-[400px] lg:h-[600px]"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-gray-100 to-green-50/50 rounded-[40px] transform rotate-3 scale-95 opacity-50"></div>
-        
-        <motion.div 
+
+        <motion.div
           className="relative z-10 w-full h-full cursor-pointer group"
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         >
           {/* Usando imagem fallback abstrata premium já que a quota excedeu */}
-          <img 
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/investment-abstract-FLc5ooALdYwX9XNCmJeNsh.webp" 
-            alt="3D Abstract Energy Block" 
+          <img
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/investment-abstract-FLc5ooALdYwX9XNCmJeNsh.webp"
+            alt="3D Abstract Energy Block"
             className="w-full h-full object-contain p-4 lg:p-8 drop-shadow-2xl mix-blend-multiply group-hover:scale-[1.02] transition-transform duration-700"
           />
-          
+
           {/* Floating elements */}
-          <motion.div 
+          <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
             className="absolute bottom-8 left-4 lg:bottom-16 lg:left-4 z-20 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 border border-white/50"
           >
@@ -276,8 +380,8 @@ function Hero() {
               <p className="text-xs text-gray-500 font-medium mt-0.5">Retornos previsíveis</p>
             </div>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             whileHover={{ scale: 1.05, y: -5 }}
             className="absolute top-8 right-4 lg:top-16 lg:right-4 z-20 bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-2xl flex items-center gap-4 transition-all duration-300 border border-white/50"
           >
@@ -313,7 +417,7 @@ function TrustBar() {
         {/* Gradients that fade the edges */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 max-w-[150px] bg-gradient-to-r from-white to-transparent z-10"></div>
         <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 max-w-[150px] bg-gradient-to-l from-white to-transparent z-10"></div>
-        
+
         {/* Animated Carousel Track */}
         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
           <div className="flex items-center justify-around shrink-0">
@@ -343,17 +447,17 @@ function AnimatedCounter({ prefix, target, suffix, decimals }: { prefix: string,
       },
       { threshold: 0.1 }
     );
-    
+
     if (ref.current) {
       observer.observe(ref.current);
     }
-    
+
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
     if (!isVisible) return;
-    
+
     let startTime: number | null = null;
     let animationFrame: number;
     const duration = 2000;
@@ -361,9 +465,9 @@ function AnimatedCounter({ prefix, target, suffix, decimals }: { prefix: string,
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
+
       const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      
+
       setCount(easeProgress * target);
 
       if (progress < 1) {
@@ -388,88 +492,157 @@ function AnimatedCounter({ prefix, target, suffix, decimals }: { prefix: string,
 }
 
 function MarketData() {
-  const stats = [
-    { prefix: "R$ ", num: 16.1, suffix: "T", decimals: 1, label: "Mercado de tokenização projetado para 2030", desc: "Boston Consulting Group" },
-    { prefix: "CVM ", num: 88, suffix: "", decimals: 0, label: "Resolução que regulamenta a plataforma", desc: "Comissão de Valores Mobiliários" },
-    { prefix: "", num: 100, suffix: "%", decimals: 0, label: "Digital e transparente via blockchain", desc: "Infraestrutura FIST" },
-    { prefix: "", num: 1, suffix: "ª", decimals: 0, label: "Plataforma CVM 88 de Pernambuco", desc: "Pioneira no Nordeste" },
-  ];
-
   return (
-    <section className="py-8 lg:py-12 shrink-0 w-full">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
-          <div className="flex-1 w-full">
-            <div className="mb-12">
-              <motion.p 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-fist-green font-bold tracking-widest text-sm uppercase mb-4"
-              >
-                Sobre a Fist
-              </motion.p>
-              <motion.h2 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-extrabold text-black mb-6 leading-tight"
-              >
-                Infraestrutura de mercado de capitais para o <span className="text-fist-green">futuro da energia</span>
-              </motion.h2>
-              <motion.p 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="text-gray-600 text-lg md:text-xl leading-relaxed"
-              >
-                A FIST atua como uma plataforma de Capital Markets as a Service, oferecendo funcionalidades para ofertas públicas e privadas, fundos de investimento e gestão completa do ciclo de vida de debêntures e notas comerciais utilizando tecnologia blockchain.
-              </motion.p>
-            </div>
+    <section className="py-8 lg:py-10 shrink-0 w-full relative overflow-hidden flex flex-col justify-center min-h-screen">
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-fist-green/10 to-transparent blur-3xl pointer-events-none rounded-bl-full"></div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {stats.map((stat, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm group hover:border-gray-300 transition-colors"
-                >
-                  <h3 className="text-3xl font-extrabold text-black mb-2 group-hover:text-fist-green transition-colors">
-                    <AnimatedCounter prefix={stat.prefix} target={stat.num} suffix={stat.suffix} decimals={stat.decimals} />
-                  </h3>
-                  <p className="text-black font-medium mb-2 text-sm">{stat.label}</p>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-widest">{stat.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
+        
+        {/* Cabeçalho */}
+        <div className="mb-8 max-w-4xl">
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="w-full lg:w-5/12"
+            className="text-fist-green font-bold tracking-widest text-xs uppercase mb-2"
           >
-            <motion.div
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-full h-[500px] lg:h-[700px] rounded-[2.5rem] overflow-hidden shadow-2xl"
-            >
-              <img 
-                src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/hero-energy-fHNnbETNc7zAxRNqcHZgnC.webp" 
-                alt="Sobre a FIST" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-fist-green/10 mix-blend-multiply pointer-events-none"></div>
-            </motion.div>
+            Quem Somos
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-extrabold text-fist-graphite mb-3 leading-tight"
+          >
+            A Fist conecta pessoas e empresas à <span className="text-fist-green">economia gerada por energia solar</span>, de forma digital, segura e regulamentada.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-gray-600 text-base md:text-lg leading-relaxed"
+          >
+            Além da economia na conta de luz, também desenvolvemos oportunidades de investimento em projetos reais de energia e outros ativos.
+          </motion.p>
+        </div>
+
+        {/* Grid de Ações */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          
+          {/* Card Economia */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center text-fist-green">
+                  <Sun className="w-5 h-5" />
+                </div>
+                <h3 className="text-xl font-bold text-fist-graphite">Economia Solar</h3>
+              </div>
+              
+              <p className="text-gray-600 text-base mb-6 leading-relaxed">
+                Receba créditos de energia solar e economize todos os meses. Sem instalação. Sem obra. Sem custo.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-fist-green" /> Aneel 14.300
+                </span>
+                <span className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-fist-green" /> Crédito solar
+                </span>
+                <span className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                  <Minus className="w-3.5 h-3.5 text-fist-green" /> Sem custo
+                </span>
+              </div>
+            </div>
+
+            <a href="#gerador" className="w-full flex items-center justify-center gap-2 bg-fist-graphite text-white py-3 rounded-xl font-bold hover:bg-black transition-all active:scale-95 shadow-md">
+              Quero economizar <ChevronRight className="w-5 h-5" />
+            </a>
+          </motion.div>
+
+          {/* Card Investimento */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="bg-fist-dark border border-gray-800 rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col justify-between group hover:border-fist-green/30 transition-all duration-300"
+          >
+            <div className="absolute top-0 right-0 w-48 h-48 bg-fist-green/10 rounded-full blur-3xl group-hover:bg-fist-green/20 transition-all"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center text-fist-green border border-white/5">
+                    <TrendingUp className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white">Fist Crowdfunding</h3>
+                </div>
+              </div>
+              
+              <h4 className="text-lg font-bold text-fist-green mb-2">
+                Invista e tenha retorno financeiro
+              </h4>
+              
+              <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                Além de economizar, você pode investir nos projetos de energia que geram esses créditos e receber retorno financeiro sobre isso. Projetos reais com renda fixa digital regulada pela CVM.
+              </p>
+            </div>
+
+            <a href="#tese" className="relative z-10 w-full flex items-center justify-center gap-2 bg-fist-green text-white py-3 rounded-xl font-bold hover:bg-fist-green-hover transition-all active:scale-95 shadow-lg shadow-fist-green/20">
+              Ver oportunidades <ChevronRight className="w-5 h-5" />
+            </a>
           </motion.div>
         </div>
+
+        {/* Segurança e Regulação */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm flex flex-col md:flex-row items-center gap-6 justify-between"
+        >
+          <div className="flex-1">
+            <h4 className="text-lg font-extrabold text-fist-graphite mb-2 flex items-center gap-2">
+              <ShieldCheck className="w-5 h-5 text-fist-green" />
+              Digital • Seguro • Regulado
+            </h4>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm font-semibold text-gray-600">
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Operações digitais e transparentes</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Modelo regulamentado</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Estrutura auditável</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Plataforma CVM 88</span>
+            </div>
+          </div>
+          
+          <div className="hidden md:block w-px h-16 bg-gray-200"></div>
+          
+          <div className="flex-1 md:text-right">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Ecossistema Regulatório</p>
+            <div className="flex flex-wrap gap-4 items-center md:justify-end text-sm font-black text-fist-graphite">
+              <span>CVM</span>
+              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+              <span>ANBIMA</span>
+              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+              <span>B3</span>
+              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+              <span>DREX</span>
+              <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+              <span>ANEEL</span>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -484,10 +657,11 @@ function InvestmentThesis() {
       tabLabel: "Energia",
       image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80",
       headline: (
-        <>O setor de energia é a <span className="text-fist-green">maior oportunidade</span> de investimento da década</>
+        <>Energia: uma das maiores <span className="text-fist-green">oportunidades</span> de investimento no Brasil.</>
       ),
-      description: "A transição energética global representa uma das maiores transferências de capital da história. Com a tokenização de ativos reais via blockchain, a FIST democratiza o acesso a investimentos em infraestrutura energética que antes eram exclusivos de grandes investidores institucionais.",
-      secondaryDescription: "Nossos projetos incluem usinas solares, parques eólicos e soluções de armazenamento, todos estruturados como títulos de renda fixa digital com retornos previsíveis e lastro em ativos reais do setor energético.",
+      description: "O Brasil tem um dos maiores potenciais de geração de energia solar do mundo, com grandes oportunidades de investimento nessa infraestrutura. O mercado está aquecido, os projetos são concretos e quem posiciona capital agora acessa condições que tendem a se tornar mais disputadas com o tempo.",
+      secondaryDescription: "Na Fist, você investe em usinas solares e eletropostos por meio de frações de títulos de renda fixa lastreados nesses projetos reais. Os retornos são gerados pela operação de cada projeto e distribuídos conforme os termos de cada oferta.",
+      tags: ["Usinas solares", "Eletropostos", "Armazenamento de energia", "Retorno fixo", "Lastreado em projeto real"],
       cardPrefix: "R$ ",
       cardNum: 16.1,
       cardSuffix: "T",
@@ -497,13 +671,13 @@ function InvestmentThesis() {
     },
     {
       id: "real-estate",
-      tabLabel: "Real Estate",
+      tabLabel: "Imobiliário",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80",
       headline: (
-        <>Redefinindo o acesso ao mercado de <span className="text-fist-green">Real Estate</span></>
+        <>Redefinindo o acesso ao mercado <span className="text-fist-green">Imobiliário</span></>
       ),
       description: "Historicamente marcado por alta barreira de entrada e baixa liquidez, o setor imobiliário ganha uma nova dimensão. Através da nossa infraestrutura (CVM 88), transformamos loteamentos, incorporações e galpões logísticos em ativos líquidos e rentáveis.",
-      secondaryDescription: "Ao adquirir um token de Real Estate, o investidor detém uma fração digital respaldada na força e segurança das garantias do mercado tradicional, mas com a agilidade da Web3.",
+      secondaryDescription: "Ao adquirir um token de Imobiliário, o investidor detém uma fração digital respaldada na força e segurança das garantias do mercado tradicional, mas com a agilidade da Web3.",
       cardPrefix: "$ ",
       cardNum: 100,
       cardSuffix: "B+",
@@ -550,7 +724,7 @@ function InvestmentThesis() {
   return (
     <section className="py-8 lg:py-12 overflow-hidden relative shrink-0 w-full">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        
+
         {/* Mobile Layout: Card Swiper */}
         <div className="lg:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 -mx-6 px-6 hide-scrollbar">
           {thesisData.map((data, idx) => {
@@ -560,24 +734,24 @@ function InvestmentThesis() {
                 <div className="w-full relative h-[380px] rounded-[2rem] overflow-hidden shadow-xl">
                   <img src={data.image} alt={data.tabLabel} className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-                  
+
                   <div className="absolute bottom-6 left-6 right-6">
                     <p className="text-fist-green font-bold text-xs uppercase tracking-widest mb-2">{data.tabLabel}</p>
                     <h3 className="text-white text-2xl font-extrabold leading-[1.2]">{data.headline}</h3>
                   </div>
                 </div>
-                
+
                 <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col gap-4">
                   <div className="w-14 h-14 rounded-2xl bg-green-50 flex items-center justify-center mb-2 shadow-inner">
-                      <Icon className="w-7 h-7 text-fist-green stroke-[1.5]" />
+                    <Icon className="w-7 h-7 text-fist-green stroke-[1.5]" />
                   </div>
                   <p className="text-gray-600 text-[16px] leading-[1.6]">{data.description}</p>
-                  
+
                   <div className="mt-4 bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                      <div className="text-2xl font-extrabold text-fist-green mb-1">
-                        {data.cardPrefix}{data.cardNum}{data.cardSuffix}
-                      </div>
-                      <p className="text-[13px] font-semibold text-fist-graphite leading-snug">{data.cardLabel}</p>
+                    <div className="text-2xl font-extrabold text-fist-green mb-1">
+                      {data.cardPrefix}{data.cardNum}{data.cardSuffix}
+                    </div>
+                    <p className="text-[13px] font-semibold text-fist-graphite leading-snug">{data.cardLabel}</p>
                   </div>
                 </div>
               </div>
@@ -587,7 +761,7 @@ function InvestmentThesis() {
 
         {/* Desktop Layout */}
         <div className="hidden lg:flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-          
+
           {/* Lado Esquerdo: Imagem Dinâmica e Card Flutuante */}
           <div className="w-full lg:w-1/2 relative h-[500px] lg:h-[650px] rounded-[2.5rem] overflow-hidden shadow-2xl">
             <AnimatePresence mode="wait">
@@ -602,7 +776,7 @@ function InvestmentThesis() {
                 alt={activeData.tabLabel}
               />
             </AnimatePresence>
-            
+
             {/* Gradiente sutil para manter contraste */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
@@ -636,11 +810,11 @@ function InvestmentThesis() {
                   {activeData.cardLabel}
                 </motion.p>
               </AnimatePresence>
-              
+
               {/* Mini Gráfico Mockup */}
               <div className="h-12 w-full flex items-end gap-1 mb-3">
                 {[40, 55, 45, 65, 80, 100].map((h, i) => (
-                  <motion.div 
+                  <motion.div
                     key={i + activeTab}
                     initial={{ height: 0 }}
                     animate={{ height: `${h}%` }}
@@ -668,28 +842,33 @@ function InvestmentThesis() {
 
           {/* Lado Direito: Tabs e Copywriting */}
           <div className="w-full lg:w-1/2">
-            <p className="text-fist-green font-bold tracking-[0.2em] text-xs uppercase mb-8">
-              Tese de Investimento
+            <p className="text-fist-green font-bold tracking-[0.2em] text-xs uppercase mb-2">
+              ONDE INVESTIR
+            </p>
+            <h3 className="text-2xl lg:text-3xl font-extrabold text-fist-graphite mb-2 leading-tight">
+              Escolha o projeto. Receba o retorno.
+            </h3>
+            <p className="text-gray-600 text-sm md:text-base mb-6 leading-relaxed">
+              Você sabe exatamente quanto vai receber e quando, antes de investir qualquer valor. Sem surpresa, sem volatilidade.
             </p>
 
             {/* Tabs */}
-            <div className="flex flex-wrap gap-2 mb-10">
+            <div className="flex flex-wrap gap-2 mb-6">
               {thesisData.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                    activeTab === tab.id 
-                      ? 'bg-fist-graphite text-white shadow-lg' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${activeTab === tab.id
+                    ? 'bg-fist-graphite text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
                 >
                   {tab.tabLabel}
                 </button>
               ))}
             </div>
 
-            <div className="min-h-[280px]">
+            <div className="min-h-[240px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTab + "-content"}
@@ -698,21 +877,33 @@ function InvestmentThesis() {
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <h2 className="text-4xl md:text-5xl font-extrabold text-fist-graphite leading-[1.15] mb-6">
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-fist-graphite leading-[1.15] mb-4">
                     {activeData.headline}
                   </h2>
-                  <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                  <p className="text-sm text-gray-600 leading-relaxed mb-4">
                     {activeData.description}
                   </p>
-                  <p className="text-md text-gray-500 leading-relaxed font-medium mb-10">
+                  <p className="text-sm text-gray-500 leading-relaxed font-medium mb-6">
                     {activeData.secondaryDescription}
                   </p>
+
+                  {/* @ts-ignore */}
+                  {activeData.tags && (
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {/* @ts-ignore */}
+                      {activeData.tags.map((tag, i) => (
+                        <span key={i} className="px-3 py-1.5 bg-gray-50 border border-gray-200 text-gray-600 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            <a 
-              href="#marketplace" 
+            <a
+              href="#marketplace"
               className="group inline-flex items-center gap-2 font-bold text-fist-green hover:text-fist-green-hover transition-colors relative"
             >
               <span>Ver oportunidades disponíveis</span>
@@ -766,7 +957,7 @@ function Ecosystem() {
     <section className="py-8 lg:py-12 text-fist-graphite relative overflow-hidden shrink-0 w-full">
       {/* Background Animated Gradient */}
       <div className="absolute inset-0 z-0 opacity-30">
-         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fist-green/10 via-transparent to-transparent"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-fist-green/10 via-transparent to-transparent"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
@@ -782,107 +973,107 @@ function Ecosystem() {
 
         {/* Mobile Layout (Vertical Venn Bubble Flow) */}
         <div className="flex flex-col lg:hidden relative w-full pt-6">
-           
-           {/* Overlapping Circles on Y-axis */}
-           <div className="relative w-full h-[320px] flex flex-col items-center justify-center pointer-events-none mb-10">
-              {/* FIST CWF Circle */}
-              <motion.div 
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute top-0 z-10 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-fist-green to-fist-green-hover flex items-center justify-center p-6 shadow-2xl"
-              >
-                  <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
-                  <span className="text-white font-extrabold text-xl tracking-widest drop-shadow-md">FIST CWF</span>
-              </motion.div>
-              
-              {/* FIST ASSET Circle */}
-              <motion.div 
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute bottom-0 z-20 w-[190px] h-[190px] rounded-full bg-white backdrop-blur-xl border border-gray-200 flex items-center justify-center p-6 shadow-xl"
-              >
-                  <span className="text-fist-graphite font-extrabold text-xl tracking-widest drop-shadow-md">FIST ASSET</span>
-              </motion.div>
 
-              {/* Central Connection glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-[100px] h-[100px] bg-white/40 rounded-full blur-xl pointer-events-none"></div>
-           </div>
+          {/* Overlapping Circles on Y-axis */}
+          <div className="relative w-full h-[320px] flex flex-col items-center justify-center pointer-events-none mb-10">
+            {/* FIST CWF Circle */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute top-0 z-10 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-fist-green to-fist-green-hover flex items-center justify-center p-6 shadow-2xl"
+            >
+              <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
+              <span className="text-white font-extrabold text-xl tracking-widest drop-shadow-md">FIST CWF</span>
+            </motion.div>
 
-           {/* Horizontal Snap Carousel */}
-           <div className="w-full">
-              <h3 className="text-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Setores Integrados</h3>
-              <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 hide-scrollbar -mx-6 px-6">
-                 {["Energia", "Real Estate", "Esportes", "Startups"].map((setor, idx) => {
-                    const icons = [Zap, Building2, Trophy, Rocket];
-                    const Icon = icons[idx];
-                    return (
-                      <div key={idx} className="snap-center shrink-0 w-[65vw] bg-white/80 backdrop-blur-md border border-white/60 p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center h-[140px] gap-3">
-                         <div className="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center text-fist-green shadow-inner">
-                            <Icon className="w-6 h-6 stroke-[1.5]" />
-                         </div>
-                         <span className="text-lg font-extrabold text-fist-graphite">{setor}</span>
-                      </div>
-                    );
-                 })}
-              </div>
-           </div>
+            {/* FIST ASSET Circle */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="absolute bottom-0 z-20 w-[190px] h-[190px] rounded-full bg-white backdrop-blur-xl border border-gray-200 flex items-center justify-center p-6 shadow-xl"
+            >
+              <span className="text-fist-graphite font-extrabold text-xl tracking-widest drop-shadow-md">FIST ASSET</span>
+            </motion.div>
+
+            {/* Central Connection glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-[100px] h-[100px] bg-white/40 rounded-full blur-xl pointer-events-none"></div>
+          </div>
+
+          {/* Horizontal Snap Carousel */}
+          <div className="w-full">
+            <h3 className="text-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Setores Integrados</h3>
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 hide-scrollbar -mx-6 px-6">
+              {["Energia", "Real Estate", "Esportes", "Startups"].map((setor, idx) => {
+                const icons = [Zap, Building2, Trophy, Rocket];
+                const Icon = icons[idx];
+                return (
+                  <div key={idx} className="snap-center shrink-0 w-[65vw] bg-white/80 backdrop-blur-md border border-white/60 p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center h-[140px] gap-3">
+                    <div className="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center text-fist-green shadow-inner">
+                      <Icon className="w-6 h-6 stroke-[1.5]" />
+                    </div>
+                    <span className="text-lg font-extrabold text-fist-graphite">{setor}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Desktop Layout (Grid Cross Layout) */}
         <div className="hidden lg:grid grid-cols-3 grid-rows-3 gap-8 items-center max-w-5xl mx-auto h-[700px] relative">
-          
+
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
             <defs>
               <filter id="neon-glow-desktop" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
                 <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
             </defs>
 
             {Object.values(pillars).map((pillar) => {
-               let x1, y1, x2 = '50%', y2 = '50%';
-               if (pillar.id === 'parceiros') { x1 = '50%'; y1 = '15%'; }
-               if (pillar.id === 'investidores') { x1 = '15%'; y1 = '50%'; }
-               if (pillar.id === 'consumidores') { x1 = '85%'; y1 = '50%'; }
-               if (pillar.id === 'empreendedores') { x1 = '50%'; y1 = '85%'; }
-               
-               const isActive = hoveredNode === pillar.id;
+              let x1, y1, x2 = '50%', y2 = '50%';
+              if (pillar.id === 'parceiros') { x1 = '50%'; y1 = '15%'; }
+              if (pillar.id === 'investidores') { x1 = '15%'; y1 = '50%'; }
+              if (pillar.id === 'consumidores') { x1 = '85%'; y1 = '50%'; }
+              if (pillar.id === 'empreendedores') { x1 = '50%'; y1 = '85%'; }
 
-               return (
-                 <g key={`line-${pillar.id}`}>
-                    <line x1={x1} y1={y1} x2={x2} y2={y2} className={`transition-colors duration-300 ${isActive ? 'stroke-fist-green/20' : 'stroke-gray-200'}`} strokeWidth="2" />
-                    <line 
-                      x1={x1} y1={y1} x2={x2} y2={y2} 
-                      className={`cpu-flow-line transition-all duration-300 ${isActive ? 'stroke-fist-green' : 'stroke-gray-300'}`}
-                      strokeWidth={isActive ? "4" : "2"}
-                      filter={isActive ? "url(#neon-glow-desktop)" : "none"}
-                    />
-                 </g>
-               );
+              const isActive = hoveredNode === pillar.id;
+
+              return (
+                <g key={`line-${pillar.id}`}>
+                  <line x1={x1} y1={y1} x2={x2} y2={y2} className={`transition-colors duration-300 ${isActive ? 'stroke-fist-green/20' : 'stroke-gray-200'}`} strokeWidth="2" />
+                  <line
+                    x1={x1} y1={y1} x2={x2} y2={y2}
+                    className={`cpu-flow-line transition-all duration-300 ${isActive ? 'stroke-fist-green' : 'stroke-gray-300'}`}
+                    strokeWidth={isActive ? "4" : "2"}
+                    filter={isActive ? "url(#neon-glow-desktop)" : "none"}
+                  />
+                </g>
+              );
             })}
           </svg>
 
           {/* Central Hub */}
           <div className="col-start-2 row-start-2 flex items-center justify-center relative w-full h-full z-10 group"
-              onMouseEnter={() => setHoveredNode('center')}
-              onMouseLeave={() => setHoveredNode(null)}>
-              
-              {/* Central Glassmorphism Circle */}
-              <div className="absolute z-50 w-[240px] h-[240px] bg-white/80 backdrop-blur-2xl border border-white/80 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer p-8">
-                 <img 
-                   src="https://prod-fist.web.app/assets/logoPreta-CoFflQrd.png" 
-                   alt="FIST Logo" 
-                   className="w-full max-w-[140px] h-auto brightness-0" 
-                 />
-              </div>
+            onMouseEnter={() => setHoveredNode('center')}
+            onMouseLeave={() => setHoveredNode(null)}>
+
+            {/* Central Glassmorphism Circle */}
+            <div className="absolute z-50 w-[240px] h-[240px] bg-white/80 backdrop-blur-2xl border border-white/80 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer p-8">
+              <img
+                src="https://prod-fist.web.app/assets/logoPreta-CoFflQrd.png"
+                alt="FIST Logo"
+                className="w-full max-w-[140px] h-auto brightness-0"
+              />
+            </div>
           </div>
 
           {/* Pillar Nodes (Peripheral Cards) */}
           {Object.values(pillars).map((pillar, idx) => (
-            <motion.div 
+            <motion.div
               key={pillar.id}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -892,21 +1083,21 @@ function Ecosystem() {
               onMouseEnter={() => setHoveredNode(pillar.id)}
               onMouseLeave={() => setHoveredNode(null)}
             >
-               <div className="flex items-center gap-4 mb-5">
-                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${hoveredNode === pillar.id ? 'bg-fist-green text-white shadow-lg shadow-fist-green/30 scale-110' : 'bg-green-50 text-fist-green group-hover:bg-green-100'}`}>
-                   {pillar.icon}
-                 </div>
-                 <h3 className="text-lg font-bold text-[#1A1A1A] leading-tight">{pillar.title}</h3>
-               </div>
-               
-               <ul className="space-y-3 text-sm font-medium text-gray-500">
-                  {pillar.items.map((item, i) => (
-                    <li key={i} className="flex items-center gap-3">
-                      <div className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${hoveredNode === pillar.id ? 'bg-fist-green' : 'bg-gray-300'}`}></div>
-                      <span className={`transition-colors ${hoveredNode === pillar.id ? 'text-fist-graphite' : ''}`}>{item}</span>
-                    </li>
-                  ))}
-               </ul>
+              <div className="flex items-center gap-4 mb-5">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${hoveredNode === pillar.id ? 'bg-fist-green text-white shadow-lg shadow-fist-green/30 scale-110' : 'bg-green-50 text-fist-green group-hover:bg-green-100'}`}>
+                  {pillar.icon}
+                </div>
+                <h3 className="text-lg font-bold text-[#1A1A1A] leading-tight">{pillar.title}</h3>
+              </div>
+
+              <ul className="space-y-3 text-sm font-medium text-gray-500">
+                {pillar.items.map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <div className={`w-1.5 h-1.5 rounded-full shrink-0 transition-colors ${hoveredNode === pillar.id ? 'bg-fist-green' : 'bg-gray-300'}`}></div>
+                    <span className={`transition-colors ${hoveredNode === pillar.id ? 'text-fist-graphite' : ''}`}>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>
@@ -926,18 +1117,78 @@ function Ecosystem() {
 
 
 function FAQ() {
-  const faqs = [
-    { q: "O que é crowdfunding de investimento e como funciona?", a: "Crowdfunding de investimento é uma forma de captar recursos para projetos ou empresas por meio da participação de múltiplos investidores, cada um contribuindo com uma fração do valor total. Na FIST, esse processo é regulamentado pela CVM (Resolução 88) e utiliza tecnologia blockchain para garantir transparência e segurança em todas as operações." },
-    { q: "O que é a Resolução CVM 88 e por que ela é importante?", a: "A Resolução CVM 88 regula a oferta pública de distribuição de valores mobiliários emitidos por empresas de pequeno porte, realizada com dispensa de registro. Ela estabelece regras claras para plataformas de crowdfunding de investimento, garantindo proteção ao investidor e transparência nas operações. A FIST é autorizada pela CVM sob essa resolução." },
-    { q: "O que é renda fixa digital e tokenização?", a: "Renda fixa digital são títulos de dívida (como debêntures e notas comerciais) que são emitidos e gerenciados em formato digital utilizando tecnologia blockchain. A tokenização transforma esses ativos em tokens digitais, permitindo que investidores adquiram frações menores dos títulos, democratizando o acesso a investimentos antes restritos a grandes investidores." },
-    { q: "Quais são as regras, taxas e prazos para investir?", a: "Cada oferta possui suas próprias condições de investimento, incluindo valor mínimo, prazo, taxa de retorno e forma de pagamento. Todas essas informações são detalhadas na página de cada oferta no marketplace. A FIST cobra uma taxa de intermediação que varia conforme a operação, sempre transparente e informada previamente." },
-    { q: "Como funciona o investimento em energia na FIST?", a: "A FIST foca em projetos de infraestrutura energética, incluindo usinas solares, parques eólicos e soluções de armazenamento. Os investidores adquirem tokens que representam frações de títulos de renda fixa lastreados nesses ativos reais. Os retornos são gerados pela operação dos projetos energéticos e distribuídos conforme os termos de cada oferta." },
-    { q: "Qual a segurança dos meus investimentos?", a: "Seus investimentos são protegidos por múltiplas camadas de segurança: regulamentação pela CVM, registro em blockchain imutável, custódia segura dos ativos e lastro em projetos reais de energia. Além disso, toda a documentação legal e financeira de cada oferta é disponibilizada de forma transparente na plataforma." },
-    { q: "Como funciona o desconto na conta de energia?", a: "Para projetos de geração distribuída, os investidores podem receber créditos de energia que geram descontos na conta de luz. O processo funciona por meio de compensação de créditos junto à distribuidora local, conforme regulamentação da ANEEL. Os detalhes específicos variam conforme cada projeto." },
-    { q: "Posso investir com pouco capital?", a: "Sim! A tokenização permite fracionar investimentos que antes exigiam valores elevados. Na FIST, você pode começar a investir com valores acessíveis, participando de projetos de infraestrutura energética que antes eram exclusivos de investidores institucionais. Cada oferta define seu valor mínimo de investimento." }
+  const faqsEnergia = [
+    {
+      q: "Preciso realizar alguma instalação?",
+      a: "Não. Nenhuma obra, nenhum equipamento, nenhuma alteração na sua instalação elétrica. Tudo acontece no sistema da distribuidora, sem que você precise fazer nada."
+    },
+    {
+      q: "Continuo recebendo energia da minha distribuidora?",
+      a: "Sim. Você continua recebendo energia da sua distribuidora normalmente."
+    },
+    {
+      q: "Como recebo o desconto?",
+      a: "A Fist possui usinas solares que geram energia e enviam para a rede elétrica. A distribuidora converte o que foi gerado em créditos solares. Quando você se vincula a uma das nossas usinas, esses créditos são compensados no seu consumo em kWh."
+    },
+    {
+      q: "É um processo seguro e regulamentado?",
+      a: "Sim. O modelo segue a Lei 14.300 e as regras da Aneel."
+    }
   ];
 
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const faqsCWF = [
+    {
+      q: "O que é crowdfunding de investimento e como funciona?",
+      a: "Crowdfunding de investimento é uma forma de várias pessoas financiarem juntas um projeto, cada uma com uma fração do valor total. Quem participa vira investidor, com direito a retorno financeiro sobre o que investiu. Na Fist, esse processo é regulamentado pela CVM (Resolução 88) e utiliza tecnologia blockchain para garantir transparência e segurança em todas as operações."
+    },
+    {
+      q: "O que é a Resolução CVM 88 e por que ela é importante?",
+      a: "É a lei que autoriza e regula plataformas como a Fist a captar investimentos de pessoas físicas para projetos reais. É a mesma entidade que fiscaliza corretoras e fundos no Brasil, ou seja, você está protegido pelas mesmas regras."
+    },
+    {
+      q: "O que é renda fixa digital e tokenização?",
+      a: "Renda fixa digital é um investimento onde você sabe exatamente quanto vai receber antes de aplicar, como uma poupança com prazo e rendimento definidos. Tokenização é a forma como isso é registrado: cada investimento vira um registro digital único, público e permanente, que qualquer pessoa pode consultar."
+    },
+    {
+      q: "Quais são as regras, taxas e prazos para investir?",
+      a: "Cada oferta possui suas próprias condições de investimento, incluindo valor mínimo, prazo, taxa de retorno e forma de pagamento. Todas essas informações são detalhadas na página de cada oferta no marketplace. A Fist cobra uma taxa de intermediação que varia conforme a operação, sempre transparente e informada previamente."
+    },
+    {
+      q: "Como funciona o investimento em energia na Fist?",
+      a: (
+        <div className="space-y-2">
+          <p>A Fist conecta investidores a projetos de infraestrutura de energia solar e eletropostos. Veja como funciona na prática:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Você adquire frações de títulos de renda fixa lastreados nesses projetos reais</li>
+            <li>Os projetos entram em operação e geram receita</li>
+            <li>Os retornos são distribuídos para você conforme os termos de cada oferta</li>
+            <li>Tudo registrado em blockchain e acompanhável a qualquer momento</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      q: "Qual a segurança dos meus investimentos?",
+      a: (
+        <div className="space-y-2">
+          <p>Seus investimentos são protegidos por múltiplas camadas de segurança:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Regulamentação da CVM (Resolução 88): a mesma que protege quem investe em corretoras e fundos</li>
+            <li>Blockchain: cada operação registrada publicamente, imutável e rastreável</li>
+            <li>Lastro em ativos reais: seu dinheiro é garantido por projetos físicos, não por promessas</li>
+            <li>Ecossistema regulatório completo: CVM, ANBIMA, B3</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      q: "Posso investir com pouco dinheiro?",
+      a: "Sim. A Fist foi construída para que qualquer pessoa possa participar. Cada projeto tem um valor mínimo acessível e você não precisa ter muito para começar."
+    }
+  ];
+
+  const [openEnergiaIdx, setOpenEnergiaIdx] = useState<number | null>(0);
+  const [openCWFIdx, setOpenCWFIdx] = useState<number | null>(null);
 
   return (
     <section className="py-8 lg:py-12 shrink-0 w-full">
@@ -949,39 +1200,86 @@ function FAQ() {
           </h2>
         </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => {
-            const isOpen = openIdx === idx;
-            return (
-              <div 
-                key={idx} 
-                className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-fist-green shadow-md' : 'border-gray-200 hover:border-gray-300'}`}
-              >
-                <button 
-                  className="w-full px-6 py-5 flex items-center justify-between bg-white focus:outline-none"
-                  onClick={() => setOpenIdx(isOpen ? null : idx)}
+        {/* Categoria Energia */}
+        <div className="mb-12">
+          <h3 className="text-xl font-bold text-fist-graphite mb-6 flex items-center gap-2">
+            <Sun className="w-6 h-6 text-fist-green" /> Energia com Desconto
+          </h3>
+          <div className="space-y-4">
+            {faqsEnergia.map((faq, idx) => {
+              const isOpen = openEnergiaIdx === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-fist-green shadow-md' : 'border-gray-200 hover:border-gray-300'}`}
                 >
-                  <span className={`font-bold text-left ${isOpen ? 'text-fist-green' : 'text-fist-graphite'}`}>{faq.q}</span>
-                  <div className={`p-1 rounded-full ${isOpen ? 'bg-green-50 text-fist-green' : 'text-gray-400'}`}>
-                    {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-                  </div>
-                </button>
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div 
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      className="px-6 pb-5 text-gray-600 text-sm leading-relaxed"
-                    >
-                      {faq.a}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )
-          })}
+                  <button
+                    className="w-full px-6 py-5 flex items-center justify-between bg-white focus:outline-none"
+                    onClick={() => setOpenEnergiaIdx(isOpen ? null : idx)}
+                  >
+                    <span className={`font-bold text-left pr-4 ${isOpen ? 'text-fist-green' : 'text-fist-graphite'}`}>{faq.q}</span>
+                    <div className={`p-1 rounded-full shrink-0 ${isOpen ? 'bg-green-50 text-fist-green' : 'text-gray-400'}`}>
+                      {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                    </div>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="px-6 pb-5 text-gray-600 text-sm leading-relaxed"
+                      >
+                        {faq.a}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            })}
+          </div>
         </div>
+
+        {/* Categoria CWF */}
+        <div>
+          <h3 className="text-xl font-bold text-fist-graphite mb-6 flex items-center gap-2">
+            <ShieldCheck className="w-6 h-6 text-fist-green" /> Fist Crowdfunding (CWF)
+          </h3>
+          <div className="space-y-4">
+            {faqsCWF.map((faq, idx) => {
+              const isOpen = openCWFIdx === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`border rounded-2xl overflow-hidden transition-all duration-300 ${isOpen ? 'border-fist-green shadow-md' : 'border-gray-200 hover:border-gray-300'}`}
+                >
+                  <button
+                    className="w-full px-6 py-5 flex items-center justify-between bg-white focus:outline-none"
+                    onClick={() => setOpenCWFIdx(isOpen ? null : idx)}
+                  >
+                    <span className={`font-bold text-left pr-4 ${isOpen ? 'text-fist-green' : 'text-fist-graphite'}`}>{faq.q}</span>
+                    <div className={`p-1 rounded-full shrink-0 ${isOpen ? 'bg-green-50 text-fist-green' : 'text-gray-400'}`}>
+                      {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                    </div>
+                  </button>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="px-6 pb-5 text-gray-600 text-sm leading-relaxed"
+                      >
+                        {faq.a}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -1000,10 +1298,10 @@ function Footer() {
               Infraestrutura de mercado de capitais para o futuro da energia. Tokenização e renda fixa digital acessível.
             </p>
             <div className="flex items-center gap-4 text-fist-green font-bold">
-               <ShieldCheck className="w-5 h-5"/> Autorizada CVM 88
+              <ShieldCheck className="w-5 h-5" /> Autorizada CVM 88
             </div>
           </div>
-          
+
           <div>
             <h4 className="font-bold text-lg mb-6">Plataforma</h4>
             <ul className="space-y-4 text-gray-400 text-sm font-medium">
@@ -1013,7 +1311,7 @@ function Footer() {
               <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-bold text-lg mb-6">Legal</h4>
             <ul className="space-y-4 text-gray-400 text-sm font-medium">
@@ -1023,7 +1321,7 @@ function Footer() {
               <li><a href="#" className="hover:text-white transition-colors">Ouvidoria</a></li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-bold text-lg mb-6">Contato</h4>
             <ul className="space-y-4 text-gray-400 text-sm font-medium">
@@ -1033,10 +1331,10 @@ function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-white/10 pt-8 mt-8 text-xs text-gray-500 leading-relaxed text-center">
           <p className="mb-4">
-            A FIST é uma plataforma digital de investimentos, atuando como correspondente bancário e operando em conformidade com a Resolução CVM nº 88/2022. Investimentos envolvem riscos, incluindo possibilidade de perda do capital investido. 
+            A FIST é uma plataforma digital de investimentos, atuando como correspondente bancário e operando em conformidade com a Resolução CVM nº 88/2022. Investimentos envolvem riscos, incluindo possibilidade de perda do capital investido.
           </p>
           <p>© {new Date().getFullYear()} Fist. Todos os direitos reservados. CNPJ: XX.XXX.XXX/0001-XX</p>
         </div>
