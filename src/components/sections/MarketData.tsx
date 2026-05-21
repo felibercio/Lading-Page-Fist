@@ -106,7 +106,7 @@ function MarketData() {
               </h4>
               
               <p className="text-gray-400 text-base mb-6 leading-relaxed">
-                Além de economizar, você pode investir nos projetos de energia que geram esses créditos e receber retorno financeiro sobre isso. Projetos reais com renda fixa digital regulada pela CVM.
+                Além de economizar, você pode investir nos projetos de energia que geram esses créditos e receber retorno financeiro sobre isso. Projetos reais com renda variável digital regulada pela CVM.
               </p>
             </div>
 

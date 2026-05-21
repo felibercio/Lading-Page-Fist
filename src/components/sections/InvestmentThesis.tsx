@@ -19,7 +19,7 @@ function InvestmentThesis() {
         <>Energia: uma das maiores <span className="text-fist-green">oportunidades</span> de investimento no Brasil.</>
       ),
       description: "O Brasil tem um dos maiores potenciais de geração de energia solar do mundo, com grandes oportunidades de investimento nessa infraestrutura. O mercado está aquecido, os projetos são concretos e quem posiciona capital agora acessa condições que tendem a se tornar mais disputadas com o tempo.",
-      secondaryDescription: "Na Fist, você investe em usinas solares e eletropostos por meio de frações de títulos de renda fixa lastreados nesses projetos reais. Os retornos são gerados pela operação de cada projeto e distribuídos conforme os termos de cada oferta.",
+      secondaryDescription: "Na Fist, você investe em usinas solares e eletropostos por meio de frações de ativos de renda variável lastreados nesses projetos reais. Os retornos são gerados pela operação de cada projeto e distribuídos conforme os termos de cada oferta.",
       tags: ["Usinas solares", "Eletropostos", "Armazenamento de energia", "Retorno fixo", "Lastreado em projeto real"],
       cardPrefix: "R$ ",
       cardNum: 16.1,

@@ -36,8 +36,8 @@ function FAQ() {
       a: "É a lei que autoriza e regula plataformas como a Fist a captar investimentos de pessoas físicas para projetos reais. É a mesma entidade que fiscaliza corretoras e fundos no Brasil, ou seja, você está protegido pelas mesmas regras."
     },
     {
-      q: "O que é renda fixa digital e tokenização?",
-      a: "Renda fixa digital é um investimento onde você sabe exatamente quanto vai receber antes de aplicar, como uma poupança com prazo e rendimento definidos. Tokenização é a forma como isso é registrado: cada investimento vira um registro digital único, público e permanente, que qualquer pessoa pode consultar."
+      q: "O que é renda variável digital e tokenização?",
+      a: "Renda variável digital é um investimento com alto potencial de rentabilidade baseado na performance de ativos do mundo real. Tokenização é a forma como isso é registrado: cada investimento vira um registro digital único, público e permanente, que qualquer pessoa pode consultar."
     },
     {
       q: "Quais são as regras, taxas e prazos para investir?",
@@ -49,7 +49,7 @@ function FAQ() {
         <div className="space-y-2">
           <p>A Fist conecta investidores a projetos de infraestrutura de energia solar e eletropostos. Veja como funciona na prática:</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Você adquire frações de títulos de renda fixa lastreados nesses projetos reais</li>
+            <li>Você adquire frações de ativos de renda variável lastreados nesses projetos reais</li>
             <li>Os projetos entram em operação e geram receita</li>
             <li>Os retornos são distribuídos para você conforme os termos de cada oferta</li>
             <li>Tudo registrado em blockchain e acompanhável a qualquer momento</li>

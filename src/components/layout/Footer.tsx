@@ -16,7 +16,7 @@ function Footer() {
               <img src="/assets/logo-fist-white.png" alt="FIST" className="h-8 w-auto" />
             </div>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
-              Infraestrutura de mercado de capitais para o futuro da energia. Tokenização e renda fixa digital acessível.
+              Infraestrutura de mercado de capitais para o futuro da energia. Tokenização e renda variável digital acessível.
             </p>
             <div className="flex items-center gap-4 text-fist-green font-bold">
               <ShieldCheck className="w-5 h-5" /> Autorizada CVM 88

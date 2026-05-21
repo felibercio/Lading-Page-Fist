@@ -27,7 +27,7 @@ function InvestmentHero() {
         </h1>
 
         <p className="text-lg text-fist-gray mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-          Você escolhe onde investir e acompanha retornos previsíveis em operações digitais regulamentadas.
+          Você escolhe onde investir e acompanha o alto potencial de retorno em operações digitais regulamentadas.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
@@ -40,21 +40,21 @@ function InvestmentHero() {
         </div>
 
         <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-6 lg:gap-8 border-t border-gray-200 pt-8 text-center sm:text-left">
-          <div>
+          <div className="flex flex-col h-full">
             <p className="font-bold text-fist-graphite">Blockchain</p>
-            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Infraestrutura</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-auto pt-2">Infraestrutura</p>
           </div>
-          <div>
+          <div className="flex flex-col h-full">
             <p className="font-bold text-fist-graphite">Energia</p>
-            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Tese Principal</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-auto pt-2">Tese Principal</p>
           </div>
-          <div>
-            <p className="font-bold text-fist-graphite leading-tight">Renda Fixa Digital</p>
-            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Retornos previsíveis</p>
+          <div className="flex flex-col h-full">
+            <p className="font-bold text-fist-graphite leading-tight">Renda Variável Digital</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-auto pt-2">Potencial de Valorização</p>
           </div>
-          <div>
+          <div className="flex flex-col h-full">
             <p className="font-bold text-fist-graphite">CVM 88</p>
-            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-1">Regulamentação</p>
+            <p className="text-[10px] sm:text-xs text-fist-gray font-medium uppercase tracking-widest mt-auto pt-2">Regulamentação</p>
           </div>
         </div>
       </motion.div>
@@ -88,8 +88,8 @@ function InvestmentHero() {
               <Activity className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-sm font-bold text-fist-graphite">Renda Fixa Digital</p>
-              <p className="text-xs text-gray-500 font-medium mt-0.5">Retornos previsíveis</p>
+              <p className="text-sm font-bold text-fist-graphite">Renda Variável Digital</p>
+              <p className="text-xs text-gray-500 font-medium mt-0.5">Alto potencial de retorno</p>
             </div>
           </motion.div>
 
