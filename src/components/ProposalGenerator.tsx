@@ -6,7 +6,7 @@ export function ProposalGenerator() {
   // Calculator State
   const [consumo, setConsumo] = useState<number>(500);
   const [conexao, setConexao] = useState<'monofasico' | 'bifasico' | 'trifasico'>('bifasico');
-  const [tarifa, setTarifa] = useState<number>(0.90);
+  const [tarifaString, setTarifaString] = useState<string>('');
   const [desconto, setDesconto] = useState<number>(0.15);
   const [economia, setEconomia] = useState({ mensal: 0, anual: 0 });
 
@@ -19,6 +19,8 @@ export function ProposalGenerator() {
       trifasico: 100
     };
 
+    const tarifaVal = Number(tarifaString.replace(',', '.'));
+    const tarifa = isNaN(tarifaVal) ? 0 : tarifaVal;
     const taxa = taxaDisponibilidade[conexao];
     const consumoUtil = Math.max(0, consumo - taxa);
 
@@ -26,7 +28,7 @@ export function ProposalGenerator() {
     const economiaAnual = economiaMensal * 12;
 
     setEconomia({ mensal: economiaMensal, anual: economiaAnual });
-  }, [consumo, conexao, tarifa, desconto]);
+  }, [consumo, conexao, tarifaString, desconto]);
 
   return (
     <section className="py-4 lg:py-6 relative overflow-hidden shrink-0 w-full">
@@ -74,7 +76,9 @@ export function ProposalGenerator() {
                 step="50"
                 value={consumo}
                 onChange={(e) => setConsumo(Number(e.target.value))}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-fist-green hover:accent-fist-green-hover transition-all"
+                onInput={(e) => setConsumo(Number(e.currentTarget.value))}
+                onTouchStart={(e) => e.stopPropagation()}
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-fist-green hover:accent-fist-green-hover transition-all touch-pan-y"
               />
               <div className="flex justify-between text-xs text-gray-500 mt-2">
                 <span>50 kWh</span>
@@ -117,11 +121,10 @@ export function ProposalGenerator() {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                   <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={tarifa}
-                    onChange={(e) => setTarifa(Number(e.target.value))}
+                    type="text"
+                    inputMode="decimal"
+                    value={tarifaString}
+                    onChange={(e) => setTarifaString(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-gray-700 text-white focus:border-fist-green focus:ring-2 focus:ring-fist-green/20 outline-none transition-all"
                   />
                 </div>
@@ -177,10 +180,10 @@ export function ProposalGenerator() {
             <button
               className="w-full mt-4 flex items-center justify-center gap-2 bg-fist-green text-white py-3.5 rounded-full font-extrabold text-base shadow-lg shadow-fist-green/20 hover:bg-fist-green-hover hover:scale-[1.02] active:scale-95 transition-all"
             >
-              Calcular minha economia <ChevronRight className="w-4 h-4" />
+              Quero começar minha economia <ChevronRight className="w-4 h-4" />
             </button>
-            <p className="text-center text-xs text-gray-400 mt-2">
-              Ou fale diretamente com nossa equipe no WhatsApp.
+            <p className="text-center text-xs text-gray-400 mt-3 px-4 leading-relaxed">
+              Fique tranquilo! Ao clicar no botão acima, você será direcionado(a) de forma segura para nossa equipe no WhatsApp.
             </p>
           </div>
         </motion.div>

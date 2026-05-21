@@ -214,7 +214,7 @@ function SavingsHero() {
 
         <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight text-fist-graphite leading-[1.1] mb-6">
           Economize até 20% na <br className="hidden lg:block" />
-          sua conta de <span className="text-fist-green">luz.</span>
+          <span className="text-fist-green">sua conta de luz.</span>
         </h1>
 
         <p className="text-lg text-fist-gray mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
@@ -258,9 +258,9 @@ function SavingsHero() {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         >
           <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/hero-energy-fHNnbETNc7zAxRNqcHZgnC.webp"
-            alt="3D Abstract Energy Savings"
-            className="w-full h-full object-contain p-4 lg:p-8 drop-shadow-2xl mix-blend-multiply group-hover:scale-[1.02] transition-transform duration-700"
+            src="/assets/casal-economia.png"
+            alt="Pessoa analisando fatura de energia e economizando"
+            className="w-full h-full object-cover rounded-[40px] shadow-2xl group-hover:scale-[1.02] transition-transform duration-700"
           />
 
           <motion.div
@@ -548,7 +548,7 @@ function MarketData() {
               </div>
               
               <p className="text-gray-600 text-base mb-6 leading-relaxed">
-                Receba créditos de energia solar e economize todos os meses. Sem instalação. Sem obra. Sem custo.
+                Receba créditos de energia solar e economize todos os meses. Sem instalação. Sem obra.
               </p>
 
               <div className="flex flex-wrap gap-2 mb-6">
@@ -557,9 +557,6 @@ function MarketData() {
                 </span>
                 <span className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs font-semibold text-gray-700 flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-fist-green" /> Crédito solar
-                </span>
-                <span className="px-3 py-1.5 bg-gray-50 border border-gray-100 rounded-full text-xs font-semibold text-gray-700 flex items-center gap-1.5">
-                  <Minus className="w-3.5 h-3.5 text-fist-green" /> Sem custo
                 </span>
               </div>
             </div>
@@ -617,11 +614,11 @@ function MarketData() {
               <ShieldCheck className="w-5 h-5 text-fist-green" />
               Digital • Seguro • Regulado
             </h4>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 mt-4 text-sm font-semibold text-gray-600">
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Operações digitais e transparentes</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Modelo regulamentado</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Estrutura auditável</span>
-              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green" /> Plataforma CVM 88</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mt-4 text-sm font-semibold text-gray-600">
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green shrink-0" /> Operações digitais e transparentes</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green shrink-0" /> Modelo regulamentado</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green shrink-0" /> Estrutura auditável</span>
+              <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-fist-green shrink-0" /> Plataforma CVM 88</span>
             </div>
           </div>
           
