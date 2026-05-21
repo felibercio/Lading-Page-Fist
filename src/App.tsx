@@ -972,12 +972,12 @@ function Ecosystem() {
         <div className="flex flex-col lg:hidden relative w-full pt-6">
 
           {/* Overlapping Circles on Y-axis */}
-          <div className="relative w-full h-[320px] flex flex-col items-center justify-center pointer-events-none mb-10">
+          <div className="relative w-full h-[320px] flex flex-col items-center justify-center pointer-events-none mb-4">
             {/* FIST CWF Circle */}
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute top-0 z-10 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-fist-green to-fist-green-hover flex items-center justify-center p-6 shadow-2xl"
+              className="absolute top-0 z-10 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center p-6 shadow-2xl"
             >
               <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
               <span className="text-white font-extrabold text-xl tracking-widest drop-shadow-md">FIST CWF</span>
@@ -987,31 +987,41 @@ function Ecosystem() {
             <motion.div
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute bottom-0 z-20 w-[190px] h-[190px] rounded-full bg-white backdrop-blur-xl border border-gray-200 flex items-center justify-center p-6 shadow-xl"
+              className="absolute bottom-0 z-20 w-[190px] h-[190px] rounded-full bg-gradient-to-br from-fist-green to-fist-green-hover flex items-center justify-center p-6 shadow-xl"
             >
-              <span className="text-fist-graphite font-extrabold text-xl tracking-widest drop-shadow-md">FIST ASSET</span>
+              <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
+              <span className="text-white font-extrabold text-xl tracking-widest drop-shadow-md">FIST ASSET</span>
             </motion.div>
 
             {/* Central Connection glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-[100px] h-[100px] bg-white/40 rounded-full blur-xl pointer-events-none"></div>
           </div>
 
-          {/* Horizontal Snap Carousel */}
-          <div className="w-full">
-            <h3 className="text-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Setores Integrados</h3>
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-8 hide-scrollbar -mx-6 px-6">
-              {["Energia", "Real Estate", "Esportes", "Startups"].map((setor, idx) => {
-                const icons = [Zap, Building2, Trophy, Rocket];
-                const Icon = icons[idx];
-                return (
-                  <div key={idx} className="snap-center shrink-0 w-[65vw] bg-white/80 backdrop-blur-md border border-white/60 p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center h-[140px] gap-3">
-                    <div className="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center text-fist-green shadow-inner">
-                      <Icon className="w-6 h-6 stroke-[1.5]" />
+          {/* Mobile Pillar Nodes */}
+          <div className="w-full mt-4">
+            <h3 className="text-center text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Ecossistema Integrado</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {Object.values(pillars).map((pillar) => (
+                <div
+                  key={pillar.id}
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col w-full"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-green-50 text-fist-green">
+                      {pillar.icon}
                     </div>
-                    <span className="text-lg font-extrabold text-fist-graphite">{setor}</span>
+                    <h3 className="text-lg font-bold text-[#1A1A1A]">{pillar.title}</h3>
                   </div>
-                );
-              })}
+                  <ul className="space-y-3 text-sm font-medium text-gray-500">
+                    {pillar.items.map((item, i) => (
+                      <li key={i} className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full shrink-0 bg-gray-300"></div>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </div>
