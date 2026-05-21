@@ -17,11 +17,12 @@ function Header() {
   }, []);
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-fist-dark/95 backdrop-blur-md shadow-md py-3' : 'bg-fist-dark py-5'}`}>
+    <>
+      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-fist-dark/95 backdrop-blur-md shadow-md py-3' : 'bg-fist-dark py-5'}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/fist-logo_91487e65.png" alt="FIST Logo" className="h-8 w-auto" />
+          <img src="/assets/logo-fist-white.png" alt="FIST Logo" className="h-8 w-auto" />
         </div>
 
         {/* Desktop Nav */}
@@ -43,6 +44,7 @@ function Header() {
           </button>
         </div>
       </div>
+      </header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -52,9 +54,16 @@ function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-fist-dark md:hidden flex flex-col pt-24 px-8 pb-32 overflow-y-auto"
+            className="fixed inset-0 z-[100] bg-fist-dark md:hidden flex flex-col pt-6 px-6 pb-32 overflow-y-auto"
           >
-            <div className="flex flex-col gap-6 flex-1 mt-4">
+            <div className="flex items-center justify-between mb-12">
+              <img src="/assets/logo-fist-white.png" alt="FIST Logo" className="h-8 w-auto" />
+              <button className="text-gray-300 p-2" onClick={() => setMobileMenuOpen(false)}>
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+            
+            <div className="flex flex-col gap-6 flex-1">
               {[
                 { href: '#sobre', label: 'Quem Somos', icon: Info },
                 { href: '#tese', label: 'Tese de Energia', icon: Zap },
@@ -76,11 +85,22 @@ function Header() {
                   {link.label}
                 </motion.a>
               ))}
+
+              <motion.a
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                href="#investimento"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-6 w-full flex items-center justify-center gap-2 bg-fist-green text-white px-5 py-4 rounded-full font-bold text-lg hover:bg-fist-green-hover transition-colors shadow-lg shadow-fist-green/20"
+              >
+                Invista Agora <ChevronRight className="w-5 h-5" />
+              </motion.a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
 

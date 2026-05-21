@@ -65,9 +65,9 @@ export function ProposalGenerator() {
           <div className="space-y-6 relative z-10">
             {/* Slider de Consumo */}
             <div>
-              <div className="flex justify-between items-end mb-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-end mb-6 gap-2">
                 <label className="text-gray-300 font-medium">Consumo Mensal Médio</label>
-                <span className="text-3xl font-bold text-fist-green">{consumo} <span className="text-sm text-gray-400">kWh</span></span>
+                <span className="text-4xl font-bold text-fist-green">{consumo} <span className="text-lg text-gray-400 font-normal">kWh</span></span>
               </div>
               <input
                 type="range"
@@ -78,9 +78,9 @@ export function ProposalGenerator() {
                 onChange={(e) => setConsumo(Number(e.target.value))}
                 onInput={(e) => setConsumo(Number(e.currentTarget.value))}
                 onTouchStart={(e) => e.stopPropagation()}
-                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-fist-green hover:accent-fist-green-hover transition-all touch-pan-y"
+                className="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-fist-green hover:accent-fist-green-hover transition-all touch-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-8 [&::-webkit-slider-thumb]:h-8 [&::-webkit-slider-thumb]:bg-fist-green [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-lg [&::-moz-range-thumb]:w-8 [&::-moz-range-thumb]:h-8 [&::-moz-range-thumb]:bg-fist-green [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:rounded-full"
               />
-              <div className="flex justify-between text-xs text-gray-500 mt-2">
+              <div className="flex justify-between text-xs text-gray-500 mt-4">
                 <span>50 kWh</span>
                 <span>10.000+ kWh</span>
               </div>

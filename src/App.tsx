@@ -16,7 +16,7 @@ import { ProposalGenerator } from './components/ProposalGenerator';
 
 export default function App() {
   return (
-    <div className="w-full bg-fist-offwhite text-fist-graphite font-sans overflow-hidden relative">
+    <div className="w-full bg-fist-offwhite text-fist-graphite font-sans overflow-x-hidden relative pb-24 md:pb-0">
       <Header />
 
       <main>

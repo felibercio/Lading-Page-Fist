@@ -13,7 +13,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-6">
-              <img src="https://d2xsxph8kpxj0f.cloudfront.net/310419663030289072/h5tigukZUBaktzJyg3XPZX/fist-logo_91487e65.png" alt="FIST" className="h-8 w-auto" />
+              <img src="/assets/logo-fist-white.png" alt="FIST" className="h-8 w-auto" />
             </div>
             <p className="text-gray-400 text-sm mb-6 leading-relaxed">
               Infraestrutura de mercado de capitais para o futuro da energia. Tokenização e renda fixa digital acessível.

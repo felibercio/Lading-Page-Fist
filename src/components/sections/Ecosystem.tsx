@@ -158,13 +158,27 @@ function Ecosystem() {
             onMouseEnter={() => setHoveredNode('center')}
             onMouseLeave={() => setHoveredNode(null)}>
 
-            {/* Central Glassmorphism Circle */}
-            <div className="absolute z-50 w-[240px] h-[240px] bg-white/80 backdrop-blur-2xl border border-white/80 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer p-8">
-              <img
-                src="https://prod-fist.web.app/assets/logoPreta-CoFflQrd.png"
-                alt="FIST Logo"
-                className="w-full max-w-[140px] h-auto brightness-0"
-              />
+            {/* Overlapping Circles */}
+            <div className="relative w-full h-[280px] flex flex-col items-center justify-center pointer-events-none transition-all duration-300 group-hover:scale-105">
+              {/* FIST CWF Circle */}
+              <motion.div
+                animate={{ y: [0, 6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute top-0 z-10 w-[170px] h-[170px] rounded-full bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center p-6 shadow-2xl"
+              >
+                <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
+                <span className="text-white font-extrabold text-lg tracking-widest drop-shadow-md">FIST CWF</span>
+              </motion.div>
+
+              {/* FIST ASSET Circle */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                className="absolute bottom-0 z-20 w-[170px] h-[170px] rounded-full bg-gradient-to-br from-fist-green to-fist-green-hover flex items-center justify-center p-6 shadow-xl"
+              >
+                <div className="absolute inset-0 rounded-full border-[1px] border-white/30 mix-blend-overlay"></div>
+                <span className="text-white font-extrabold text-lg tracking-widest drop-shadow-md">FIST ASSET</span>
+              </motion.div>
             </div>
           </div>
 
